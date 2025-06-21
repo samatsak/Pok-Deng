@@ -63,7 +63,7 @@ const compareCard = () => {
     console.log("You lose!!!, lost", player.bet, "chips");
     player.chips -= player.bet;
   } else {
-    console.log("You draw!!!");
+    console.log("You tie!!!");
   }
   anotherGame();
 };
