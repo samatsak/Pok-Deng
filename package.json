@@ -1,0 +1,23 @@
+{
+  "name": "pok-deng",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samatsak/Pok-Deng.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samatsak/Pok-Deng/issues"
+  },
+  "homepage": "https://github.com/samatsak/Pok-Deng#readme",
+  "description": "",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
