@@ -7,13 +7,8 @@ const terminal = readline.createInterface({
 });
 
 let player = {
-  cards: [],
   chips: 0,
   bet: 0,
-};
-
-let dealer = {
-  cards: [],
 };
 
 const play = () => {
@@ -37,7 +32,7 @@ const anotherGame = () => {
     const input = answer.trim().toLowerCase();
     if (input === "yes" || input === "y") {
       play();
-    } else if (input === "no" || input === "exit" || input === "q") {
+    } else if (input === "no" || input === "n") {
       if (player.chips >= 0) {
         console.log("You got total", player.chips, "chips");
       } else {
@@ -51,15 +46,42 @@ const anotherGame = () => {
   });
 };
 
-const compareCard = () => {
-  const playScore =
-    player.cards.reduce((sum, curr) => sum + curr.value, 0) % 10;
+const compareCard = (playerCards, dealerCards) => {
+  const playScore = playerCards.reduce((sum, curr) => sum + curr.value, 0) % 10;
   const dealerScore =
-    dealer.cards.reduce((sum, curr) => sum + curr.value, 0) % 10;
+    dealerCards.reduce((sum, curr) => sum + curr.value, 0) % 10;
+
   if (playScore > dealerScore) {
+    return 1;
+  } else if (playScore < dealerScore) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+
+const dealCard = () => {
+  const shuffleCards = _.shuffle(CARD_DECK);
+  const playerCards = shuffleCards.slice(0, 2);
+
+  const remainingCards = shuffleCards.slice(2);
+  const dealerCards = remainingCards.slice(0, 2);
+
+  const playerCardMessage = playerCards
+    .map((c) => c.suit + "-" + c.rank)
+    .join(", ");
+  const dealerCardMessage = dealerCards
+    .map((c) => c.suit + "-" + c.rank)
+    .join(", ");
+
+  console.log("You got", playerCardMessage);
+  console.log("The dealer got", dealerCardMessage);
+  const result = compareCard(playerCards, dealerCards);
+
+  if (result === 1) {
     console.log("You won!!!, received", player.bet, "chips");
     player.chips += player.bet;
-  } else if (playScore < dealerScore) {
+  } else if (result === -1) {
     console.log("You lose!!!, lost", player.bet, "chips");
     player.chips -= player.bet;
   } else {
@@ -68,23 +90,7 @@ const compareCard = () => {
   anotherGame();
 };
 
-const dealCard = () => {
-  const shuffleCards = _.shuffle(CARD_DECK);
-  const playerCards = shuffleCards.slice(0, 2);
-  const remainingCards = shuffleCards.slice(2);
-  const dealerCards = remainingCards.slice(0, 2);
-  player.cards = playerCards;
-  dealer.cards = dealerCards;
-  const playerCardMessage = player.cards
-    .map((c) => c.suit + "-" + c.rank)
-    .join(", ");
-  const dealerCardMessage = dealer.cards
-    .map((c) => c.suit + "-" + c.rank)
-    .join(", ");
-  console.log("You got", playerCardMessage);
-  console.log("The dealer got", dealerCardMessage);
-  compareCard();
-};
-
 // Start the game
 play();
+
+module.exports = { compareCard };

@@ -57,4 +57,4 @@ const CARD_DECK = [
   { suit: "Spades", rank: "King", value: 0 },
 ];
 
-exports.CARD_DECK = CARD_DECK;
+module.exports = { CARD_DECK };
