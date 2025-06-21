@@ -78,14 +78,18 @@ const dealCard = () => {
   console.log("The dealer got", dealerCardMessage);
   const result = compareCard(playerCards, dealerCards);
 
-  if (result === 1) {
-    console.log("You won!!!, received", player.bet, "chips");
-    player.chips += player.bet;
-  } else if (result === -1) {
-    console.log("You lose!!!, lost", player.bet, "chips");
-    player.chips -= player.bet;
-  } else {
-    console.log("You tie!!!");
+  switch (result) {
+    case 1:
+      console.log("You won!!!, received", player.bet, "chips");
+      player.chips += player.bet;
+      break;
+    case -1:
+      console.log("You lose!!!, lost", player.bet, "chips");
+      player.chips -= player.bet;
+      break;
+    default:
+      console.log("You tie!!!");
+      break;
   }
   anotherGame();
 };
