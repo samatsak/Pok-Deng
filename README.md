@@ -1,0 +1,1 @@
+npm start to play pok-deng game
